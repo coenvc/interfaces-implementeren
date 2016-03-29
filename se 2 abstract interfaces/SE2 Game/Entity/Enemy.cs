@@ -3,36 +3,13 @@ using SE2_Game.Game;
 
 namespace SE2_Game.Entity
 {
-    public class Enemy
+    public class Enemy : Character
     {
         // The lower this value is, the faster the enemy moves
         private int msBetweenMoves = 100;
 
-        private const int borderSize = 2;
-        private Pen pen = new Pen(Color.Black, borderSize);
-        private SolidBrush brush = new SolidBrush(Color.FromArgb(215, 38, 61));
-
         private long previousMoveTime;
-        public Point Position { get; private set; }
 
-        /// <summary>
-        /// The HitPoints for the enemy. If this equals zero, no more enemy.
-        /// </summary>
-        public int HitPoints
-        {
-            get
-            {
-                return this.hitPoints;
-            }
-            set
-            {
-                if (value >= 0)
-                {
-                    this.hitPoints = value;
-                }
-            }
-        }
-        private int hitPoints;
 
         // We need a font and formatter to draw strings. Instead of creating
         // them on each drawing call, we define them once here.
@@ -47,6 +24,9 @@ namespace SE2_Game.Entity
             // Make drawn string appear centered in the positioning rectangle.
             this.stringFormat.Alignment = StringAlignment.Center;
             this.stringFormat.LineAlignment = StringAlignment.Center;
+
+            //Brush rood maken voor de enemy 
+            brush = new SolidBrush(Color.Red);
         }
 
         /// <summary>
@@ -68,20 +48,6 @@ namespace SE2_Game.Entity
             }
         }
 
-        /// <summary>
-        /// Draws the player on the screen.
-        /// </summary>
-        /// <param name="g">The graphics object to draw with.</param>
-        public void Draw(Graphics g)
-        {
-            Rectangle r = new Rectangle(
-                this.Position + new Size(borderSize * 2, borderSize * 2),
-                World.Instance.Grid.CellSize - new Size(borderSize * 4, borderSize * 4));
-            g.FillEllipse(this.brush, r);
-            g.DrawEllipse(this.pen, r);
-            g.DrawString(System.Convert.ToString(this.HitPoints),
-                this.font, Brushes.White, r, this.stringFormat);
-        }
 
         /// <summary>
         /// Given an origin, offsets this given position to the next adjacent cell.
@@ -130,6 +96,7 @@ namespace SE2_Game.Entity
 
             // All is good in the world: return the new position
             return newPos;
-        }
+        } 
+
     }
 }

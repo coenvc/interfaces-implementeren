@@ -1,94 +1,59 @@
-﻿using System.Drawing;
-using System.Windows.Forms;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Drawing;
 using SE2_Game.Game;
-
 namespace SE2_Game.Entity
 {
-    public class Player : Character
-    { 
+    public class Character 
+    {
+        protected const int borderSize = 1;
+        protected Pen pen = new Pen(Color.Black, borderSize);
+        protected SolidBrush brush = new SolidBrush(Color.FromArgb(61, 123, 160));
+        protected int hitPoints; 
+
+        public Point Position { get; protected set; }
+
         /// <summary>
-        /// This property contains the last user interaction that has taken
-        /// place. Reading this value will return this last action once, after
-        /// which the value will be reset.
+        /// The HitPoints for the enemy. If this equals zero, no more enemy.
         /// </summary>
-        private Action CurrentAction
+        public int HitPoints
         {
             get
             {
-                Action action = this.currentAction;
-                this.currentAction = Action.NoAction;
-                return action;
+                return this.hitPoints;
             }
             set
             {
-                if (value != Action.NoAction)
+                if (value >= 0)
                 {
-                    this.currentAction = value;
+                    this.hitPoints = value;
                 }
             }
         }
-        private Action currentAction = Action.NoAction;
 
         // We need a font and formatter to draw strings. Instead of creating
         // them on each drawing call, we define them once here.
         private Font font = new Font("Arial", 8);
         private StringFormat stringFormat = new StringFormat();
 
-        public Player()
-        {
-            this.HitPoints = 100;
-
-            // Make drawn string appear centered in the positioning rectangle.
-            this.stringFormat.Alignment = StringAlignment.Center; 
-            this.stringFormat.LineAlignment = StringAlignment.Center;
-
-           
-        }
 
         /// <summary>
-        /// Update the player position based on the current user interaction.
+        /// Draws the player on the screen.
         /// </summary>
-        public void Update()
+        /// <param name="g">The graphics object to draw with.</param>
+        public void Draw(Graphics g)
         {
-            this.Position = this.UpdatePosition(this.Position, this.CurrentAction);
+            Rectangle r = new Rectangle(
+                this.Position + new Size(borderSize * 2, borderSize * 2),
+                World.Instance.Grid.CellSize - new Size(borderSize * 4, borderSize * 4));
+            g.FillEllipse(this.brush, r);
+            g.DrawEllipse(this.pen, r);
+            g.DrawString(System.Convert.ToString(this.HitPoints),
+                this.font, Brushes.White, r, this.stringFormat);
         }
-
-
-  
-
-        /// <summary>
-        /// Given a keyboard key, returns a direction based thereon. For now,
-        /// this checks the arrow kays and WASD.
-        /// </summary>
-        /// <returns>The keyboard key converted to a direction.</returns>
-        public void Interaction(Keys key)
-        {
-            if (key == Keys.Up || key == Keys.W)
-            {
-                this.CurrentAction = Action.MoveUp;
-            }
-            else if (key == Keys.Right || key == Keys.D)
-            {
-                this.CurrentAction = Action.MoveRight;
-            }
-            else if (key == Keys.Down || key == Keys.S)
-            {
-                this.CurrentAction = Action.MoveDown;
-            }
-            else if (key == Keys.Left || key == Keys.A)
-            {
-                this.CurrentAction = Action.MoveLeft;
-            }
-            else if (key == Keys.Space)
-            {
-                this.CurrentAction = Action.PerformAction;
-            }
-            else
-            {
-                this.CurrentAction = Action.NoAction;
-            }
-        }
-        
         /// <summary>
         /// Given an origin, offsets this given position to the next adjacent cell.
         /// The resulting position is guaranteed to be inside the playing area.
@@ -136,6 +101,10 @@ namespace SE2_Game.Entity
 
             // All is good in the world: return the new position
             return newPos;
-        }
+        } 
+
+
+
+
     }
 }

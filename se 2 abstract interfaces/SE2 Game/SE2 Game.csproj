@@ -48,6 +48,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Entity\Action.cs" />
+    <Compile Include="Entity\Character.cs" />
     <Compile Include="Entity\Enemy.cs" />
     <Compile Include="Game\Map\Cell.cs" />
     <Compile Include="Entity\Player.cs" />
