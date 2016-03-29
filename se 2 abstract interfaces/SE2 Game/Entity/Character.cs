@@ -7,7 +7,7 @@ using System.Drawing;
 using SE2_Game.Game;
 namespace SE2_Game.Entity
 {
-    public class Character 
+    public abstract class Character 
     {
         protected const int borderSize = 1;
         protected Pen pen = new Pen(Color.Black, borderSize);
