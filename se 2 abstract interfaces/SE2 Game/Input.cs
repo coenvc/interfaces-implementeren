@@ -17,7 +17,7 @@ namespace SE2_Game
         public Input()
         {
             this.CenterToScreen();
-            InitializeComponent();
+            InitializeComponent(); 
         }
 
         private void btnOke_Click(object sender, EventArgs e)

@@ -48,8 +48,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Entity\Action.cs" />
+    <Compile Include="Entity\Broek.cs" />
     <Compile Include="Entity\Character.cs" />
     <Compile Include="Entity\Enemy.cs" />
+    <Compile Include="Entity\Gear.cs" />
+    <Compile Include="Entity\Icarryable.cs" />
     <Compile Include="Game\Map\Cell.cs" />
     <Compile Include="Entity\Player.cs" />
     <Compile Include="Form1.cs">

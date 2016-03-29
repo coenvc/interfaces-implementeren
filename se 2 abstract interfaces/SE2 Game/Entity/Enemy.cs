@@ -10,6 +10,7 @@ namespace SE2_Game.Entity
 
         private long previousMoveTime;
 
+        
 
         // We need a font and formatter to draw strings. Instead of creating
         // them on each drawing call, we define them once here.

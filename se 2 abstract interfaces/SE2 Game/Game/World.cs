@@ -4,6 +4,7 @@ using System.Drawing;
 using SE2_Game.Game.Map;
 using SE2_Game.Entity;
 using System.Collections.Generic;
+using SE2_Game.Entity.Gear;
 
 namespace SE2_Game.Game
 {
@@ -12,6 +13,7 @@ namespace SE2_Game.Game
         public Grid Grid { get; private set; }
         public Player Player { get; private set; }
         public List<Enemy> Enemy = new List<Enemy>();
+        public List<Icarryable> Gear = new List<Icarryable>();
 
         public bool GameWon
         {
@@ -77,6 +79,7 @@ namespace SE2_Game.Game
             {
                 Enemy.Add(new Enemy(World.Instance.Grid.FreePosition()));
             }
+            Gear.Add(new Broek(World.Instance.Grid.FreePosition()));
              this.stopwatch.Start();
             
         }
@@ -116,6 +119,8 @@ namespace SE2_Game.Game
             Input inputform = new Input();
             inputform.ShowDialog();
             return inputform.aantal;
-        }
+        } 
+
+
     }
 }
