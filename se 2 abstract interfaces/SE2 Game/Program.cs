@@ -4,8 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace interfaces_implementeren
+namespace SE2_Game
 {
+    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
     static class Program
     {
         /// <summary>
