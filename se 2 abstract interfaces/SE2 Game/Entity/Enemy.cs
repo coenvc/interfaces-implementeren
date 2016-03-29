@@ -13,7 +13,6 @@ namespace SE2_Game.Entity
 
         // We need a font and formatter to draw strings. Instead of creating
         // them on each drawing call, we define them once here.
-        private Font font = new Font("Arial", 8);
         private StringFormat stringFormat = new StringFormat();
 
         public Enemy(Point position)
@@ -96,7 +95,8 @@ namespace SE2_Game.Entity
 
             // All is good in the world: return the new position
             return newPos;
-        } 
+        }  
+
 
     }
 }

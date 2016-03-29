@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Drawing;
 using SE2_Game.Game.Map;
 using SE2_Game.Entity;
+using System.Collections.Generic;
 
 namespace SE2_Game.Game
 {
@@ -10,7 +11,7 @@ namespace SE2_Game.Game
     {
         public Grid Grid { get; private set; }
         public Player Player { get; private set; }
-        public Enemy Enemy { get; private set; }
+        public List<Enemy> Enemy = new List<Enemy>();
 
         public bool GameWon
         {
@@ -68,10 +69,16 @@ namespace SE2_Game.Game
         /// a wall cell, expressed in a range from 0 to 100.</param>
         public void Create(Size mapSize, Size cellCount, int wallProbability)
         {
+
             this.Grid = new Grid(mapSize, cellCount, wallProbability);
             this.Player = new Player();
-            this.Enemy = new Enemy(World.Instance.Grid.FreePosition());
-            this.stopwatch.Start();
+            int aantal = input();
+            for (int i = 0; i < aantal; i++)
+            {
+                Enemy.Add(new Enemy(World.Instance.Grid.FreePosition()));
+            }
+             this.stopwatch.Start();
+            
         }
 
         /// <summary>
@@ -80,11 +87,14 @@ namespace SE2_Game.Game
         public void Update()
         {
             this.Player.Update();
-            this.Enemy.Update();
-
-            if (this.Player.Position.Equals(this.Enemy.Position))
+            foreach (var enemy in Enemy)
             {
-                this.Player.HitPoints -= 5;
+                enemy.Update();
+
+                if (this.Player.Position.Equals(enemy.Position))
+                {
+                    this.Player.HitPoints -= 5;
+                }
             }
         }
 
@@ -95,8 +105,17 @@ namespace SE2_Game.Game
         public void Draw(Graphics g)
         {
             this.Grid.Draw(g);
-            this.Enemy.Draw(g);
+            foreach (var enemy in Enemy) {
+                enemy.Draw(g);
+            }
             this.Player.Draw(g);
+        }
+
+        private int input()
+        {
+            Input inputform = new Input();
+            inputform.ShowDialog();
+            return inputform.aantal;
         }
     }
 }
